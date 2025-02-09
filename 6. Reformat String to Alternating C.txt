@@ -1,0 +1,32 @@
+6. Reformat String to Alternating Case
+
+
+def reformat_alternating(s: str) -> str:
+    """
+    Return a version of s where alphabetical characters
+    alternate between uppercase and lowercase.
+    
+    Non-alphabetic characters (digits, spaces, punctuation, etc.)
+    remain in place and do not affect the alternation sequence.
+    """
+    result = []
+    uppercase_next = True  # start with uppercase for the 1st letter
+
+    for ch in s:
+        if ch.isalpha():
+            if uppercase_next:
+                result.append(ch.upper())
+            else:
+                result.append(ch.lower())
+            uppercase_next = not uppercase_next
+        else:
+            # Leave numbers, symbols, spaces, etc. as is
+            result.append(ch)
+
+    return "".join(result)
+
+if __name__ == "__main__":
+    import sys
+    original_string = sys.stdin.read().rstrip("\n")
+    reformatted = reformat_alternating(original_string)
+    print(reformatted)

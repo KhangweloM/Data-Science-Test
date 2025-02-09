@@ -1,0 +1,50 @@
+7. Organizing Books into Identical Sets
+
+
+def can_organize_books_validly(shelf):
+    """
+    Each element in shelf[] is the 'ID' of a book on the shelf.
+    We want to see if there's a single integer x > 1 such that
+    each distinct book ID appears a multiple of x times.
+    This boils down to checking if the gcd of all frequencies
+    is greater than 1.
+    """
+    from math import gcd
+    from collections import Counter
+    
+    # Count how many times each book ID appears
+    freq_counter = Counter(shelf)
+    
+    # Extract all frequencies
+    freqs = list(freq_counter.values())
+    
+    # Compute the gcd of all frequencies
+    current_gcd = freqs[0]
+    for f in freqs[1:]:
+        current_gcd = gcd(current_gcd, f)
+        if current_gcd == 1:
+            # No need to continue if gcd is already 1
+            return False
+    
+    # If gcd is > 1, it's possible to form sets of size gcd
+    return current_gcd > 1
+
+if __name__ == "__main__":
+    import sys
+    
+    # 1) Read the array from standard input (as one line), e.g.:
+    #    "[5, 5, 3, 3, 2, 2]" or space-separated. Adjust parsing as needed.
+    line = sys.stdin.read().strip()
+    
+    # Remove brackets if present
+    line = line.strip('[]')
+    # Split by commas
+    tokens = line.split(',')
+    # Convert each to int
+    shelf = [int(tok.strip()) for tok in tokens]
+    
+    # 2) Check if we can organize
+    if can_organize_books_validly(shelf):
+        print("YES")
+    else:
+        print("NO")

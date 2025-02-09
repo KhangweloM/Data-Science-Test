@@ -1,0 +1,27 @@
+4. Magic Potion Identifier
+
+
+def is_perfect_cube(n: int) -> bool:
+    """Return True if n is a perfect cube, False otherwise."""
+    # A simple integer-based approach using binary search
+    # (so we avoid floating-point inaccuracies for large numbers).
+    low, high = 1, n
+    while low <= high:
+        mid = (low + high) // 2
+        cube = mid * mid * mid
+        
+        if cube == n:
+            return True
+        elif cube < n:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return False
+
+# Read input and output the result
+if __name__ == "__main__":
+    power = int(input().strip())
+    if is_perfect_cube(power):
+        print("YES")
+    else:
+        print("NO")

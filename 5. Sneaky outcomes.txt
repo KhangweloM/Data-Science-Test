@@ -1,0 +1,38 @@
+5. Sneaky outcomes
+
+
+def find_duplicates(outcomes):
+    """
+    Given a list of integers (length n+2),
+    return the two duplicates in any order.
+    """
+    seen = set()
+    duplicates = []
+    for x in outcomes:
+        if x in seen:
+            duplicates.append(x)
+            # We know exactly two outcomes are repeated, so we can stop early
+            if len(duplicates) == 2:
+                break
+        else:
+            seen.add(x)
+    return duplicates
+
+if __name__ == "__main__":
+    import sys
+    
+    # Read the entire line from standard input, e.g. "[1,2,3,4,1,5,2]"
+    line = sys.stdin.read().strip()
+    
+    # Strip square brackets if present
+    line = line.strip('[]')
+    # Split by commas
+    tokens = line.split(',')
+    # Convert each piece to an integer
+    outcomes_list = [int(token.strip()) for token in tokens]
+    
+    # Find the two duplicates
+    duplicates = find_duplicates(outcomes_list)
+    
+    # Print them as a Python-like list; e.g. [x, y]
+    print(duplicates)

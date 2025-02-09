@@ -1,0 +1,42 @@
+10. NBA Player Statistics
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 1. Load the data (adjust URL or filename as needed)
+file = "NBA_2024_cleaned.csv"
+df = pd.read_csv(file)
+
+# 2. Define high scorers
+df['ScorerType'] = df['PTS'].apply(lambda x: 'High Scorer' if x >= 20 else 'Other')
+
+# Metrics to compare
+metrics = ['FGA', '3PA', 'FT', 'AST', 'TRB']
+
+# Compute mean values for each group
+mean_values = df.groupby('ScorerType')[metrics].mean()
+
+# 3. Create a grouped bar plot
+fig, ax = plt.subplots(figsize=(8,5))
+x = np.arange(len(metrics))
+width = 0.4
+
+# Bar positions
+ax.bar(x - width/2, mean_values.loc['High Scorer', metrics], 
+       width, label='High Scorers')
+ax.bar(x + width/2, mean_values.loc['Other', metrics], 
+       width, label='Other Players')
+
+# Formatting
+ax.set_xticks(x)
+ax.set_xticklabels(metrics)
+ax.set_ylabel('Mean Value')
+ax.set_title('Comparison of Mean Metrics by Scorer Type')
+ax.legend()
+
+plt.tight_layout()
+plt.show()
+
+# Optional: Print out the numerical means
+print(mean_values)
